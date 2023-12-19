@@ -10,7 +10,9 @@ require('./auth/auth')
 
 const app = express()
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://yuansheva:%40Sheva210@bangkit.uykenqg.mongodb.net/', { 
+    useNewUrlParser: true 
+})
 const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'))
@@ -27,14 +29,11 @@ app.use((req, res, next) => {
   res.json({ message: "Page not found" });
 });
 
-
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({ error: err });
 });
 
-const port = 3000;
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+const port = process.env.PORT || 8080; 
+app.listen(port, () => { 
+    console.log('Hello listening port', port); });
